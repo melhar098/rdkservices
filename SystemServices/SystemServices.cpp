@@ -66,7 +66,7 @@
 using namespace std;
 
 #define API_VERSION_NUMBER_MAJOR 2
-#define API_VERSION_NUMBER_MINOR 1
+#define API_VERSION_NUMBER_MINOR 2
 #define API_VERSION_NUMBER_PATCH 3
 
 #define MAX_REBOOT_DELAY 86400 /* 24Hr = 86400 sec */
@@ -467,7 +467,7 @@ namespace WPEFramework {
             registerMethod(_T("getWakeupReason"), &SystemServices::getWakeupReason, this);
             registerMethod(_T("getLastWakeupKeyCode"), &SystemServices::getLastWakeupKeyCode, this);
 #endif
-            registerMethod("uploadLogs", &SystemServices::uploadLogs, this);
+            registerMethod("uploadLogs", &SystemServices::uploadLogsAsync, this);
 
             registerMethod("uploadLogsAsync", &SystemServices::uploadLogsAsync, this);
             registerMethod("abortLogUpload", &SystemServices::abortLogUpload, this);
@@ -4463,6 +4463,8 @@ namespace WPEFramework {
         /***
          * @brief : upload STB logs to the specified URL.
          * @param1[in] : url::String
+         *
+         * uploadLogs API was deprecated. Any calls to this API will use uploadLogsAsync.
          */
         uint32_t SystemServices::uploadLogs(const JsonObject& parameters, JsonObject& response)
         {
